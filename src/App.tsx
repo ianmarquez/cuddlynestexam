@@ -17,7 +17,7 @@ function App() {
       setError(true)
     } else {
       setError(false);
-      setCountdown(parseInt(value));
+      setCountdown(parseFloat(value));
     }
   }, 300);
   
@@ -54,7 +54,6 @@ function App() {
             </Grid>
           </Grid>
         </CardContent>
-        
       </Card >
     </div>
   );
