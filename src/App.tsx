@@ -13,7 +13,7 @@ function App() {
   const callback = () => setCountdown(0);
 
   const onChange = _.debounce((value: string) => { 
-    if(isNaN(parseInt(value))) {
+    if(isNaN(parseInt(value)) || parseFloat(value) <= 0) {
       setError(true)
     } else {
       setError(false);
@@ -36,7 +36,7 @@ function App() {
                 size="small"
                 onChange={(e) => onChange(e.target.value)}
                 />
-                {error && <Alert severity="error">Countdown must be a number.</Alert>}
+                {error && <Alert severity="error">Countdown must be a valid number.</Alert>}
             </Grid>
             <Grid item sm={12}>
               <Timer startTime={countdown} timerSpeed={speed} onTimerEnd={callback}/>
