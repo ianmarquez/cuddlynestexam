@@ -10,9 +10,18 @@ function App() {
   const [ countdown, setCountdown ] = useState<number>(0);
   const [ speed, setSpeed ] = useState<1|1.5|2>(1);
   const [ error, setError ] = useState<boolean>(false);
-  const callback = () => setCountdown(0);
+  const [ start, setStart ] = useState<boolean>(false);
+  const callback = () => {
+    setCountdown(0);
+    setStart(false);
+  };
 
   const onChange = _.debounce((value: string) => { 
+    if (value === '') {
+      setError(false);
+      setCountdown(0);
+      return;
+    };
     if(isNaN(parseInt(value)) || parseFloat(value) <= 0) {
       setError(true)
     } else {
@@ -35,13 +44,19 @@ function App() {
                 variant="outlined" 
                 size="small"
                 onChange={(e) => onChange(e.target.value)}
+                disabled={start}
+                InputProps={{ endAdornment: <Button variant="contained" onClick={() => {
+                  if (countdown !== 0) setStart(true)
+                }} color="primary" disabled={start}>
+                start
+              </Button>}}
                 />
             </Grid>
             <Grid item sm={12} style={{ textAlign: 'center' }}>
               {error && <Alert severity="error">Must be a valid number.</Alert>}
             </Grid>
             <Grid item sm={12}>
-              <Timer startTime={countdown} timerSpeed={speed} onTimerEnd={callback}/>
+              <Timer startTime={countdown} timerSpeed={speed} onTimerEnd={callback} start={start}/>
             </Grid>
             <Grid item sm={12}>
               <Button variant="contained" onClick={() => setSpeed(1)} color={ speed === 1 ? "primary": "secondary"}>

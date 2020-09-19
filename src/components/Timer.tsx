@@ -5,13 +5,15 @@ import {
   PauseCircleOutline as PauseCircleOutlineIcon,
   PlayCircleFilled as PlayCircleFilledIcon
 } from '@material-ui/icons';
+import _ from 'underscore';
 
-import '../assets/components/Timer.scss'
+import '../assets/components/Timer.scss';
 
 interface Props {
   timerSpeed: 1.5 | 1 | 2;
   onTimerEnd: () => void;
   startTime: number;
+  start: boolean;
 }
 
 interface State {
@@ -44,15 +46,24 @@ export default class Timer extends React.Component<Props, State> {
       });
       return;
     }
+    
+    if (this.props.start === true && !prevProps.start) {
+      this.setState({
+        state: true
+      });
+      return;
+    }
 
     if (prevState.state !== this.state.state) {
       if (this.state.state === true) {
         this.startTimer();
       }
+      return;
     }
     if (prevProps.timerSpeed !== this.props.timerSpeed) {
       clearInterval(this.timer);
       this.startTimer();
+      return;
     }
   }
 
@@ -69,7 +80,7 @@ export default class Timer extends React.Component<Props, State> {
         }
         if (this.state.timeRemaining === 0) {
           clearInterval(this.timer);
-          this.props.onTimerEnd();
+          _.delay(() => this.props.onTimerEnd(), 1000)
         } else {
           this.setState({
             timeRemaining: this.state.timeRemaining - 1
