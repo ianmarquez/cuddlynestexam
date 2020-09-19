@@ -5,7 +5,7 @@ services:
   client:
     stdin_open: true 
     build: 
-      context: ./client
+      context: ./
       dockerfile: DockerFile
     environment:
       NODE_PATH: src
@@ -14,6 +14,6 @@ services:
     ports:
       - 3000:3000
     volumes:
-      - ./client/src:/app/src
+      - ./src:/app/src
     command: npm start
     
