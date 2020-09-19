@@ -36,7 +36,9 @@ function App() {
                 size="small"
                 onChange={(e) => onChange(e.target.value)}
                 />
-                {error && <Alert severity="error">Countdown must be a valid number.</Alert>}
+            </Grid>
+            <Grid item sm={12} style={{ textAlign: 'center' }}>
+              {error && <Alert severity="error">Must be a valid number.</Alert>}
             </Grid>
             <Grid item sm={12}>
               <Timer startTime={countdown} timerSpeed={speed} onTimerEnd={callback}/>
