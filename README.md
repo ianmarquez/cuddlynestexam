@@ -1,4 +1,4 @@
-This project was created as requirement for my Fan Love Job Application
+This project was created as requirement for my Cuddly Nest Job Application
 
 ## Requirements
 
